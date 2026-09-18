@@ -1,0 +1,83 @@
+==================================================
+ PIPELINE DE SEGURIDAD - FORO Y RESEÑAS
+==================================================
+
+--------------------------------------------------
+ETAPA 1 - Deteccion de secretos
+Umbral: bloquea si encuentra cualquier secreto
+--------------------------------------------------
+2026-09-18T02:42:57Z	INFO	[secret] Secret scanning is enabled
+2026-09-18T02:42:57Z	INFO	[secret] Please see https://trivy.dev/v0.67/docs/scanner/secret#recommendation for faster secret detection
+2026-09-18T02:42:57Z	WARN	[pip] Unable to find python `site-packages` directory. License detection is skipped.	err="unable to find path to Python executable"
+2026-09-18T02:42:57Z	INFO	Number of language-specific files	num=1
+
+Report Summary
+
+┌──────────────────────┬──────┬─────────┐
+│        Target        │ Type │ Secrets │
+├──────────────────────┼──────┼─────────┤
+│ app/requirements.txt │ pip  │    -    │
+└──────────────────────┴──────┴─────────┘
+Legend:
+- '-': Not scanned
+- '0': Clean (no security findings detected)
+
+[OK] No se encontraron secretos en el repositorio.
+
+--------------------------------------------------
+ETAPA 2 - Configuracion segura
+Umbral: bloquea con hallazgos HIGH o CRITICAL
+--------------------------------------------------
+2026-09-18T02:42:57Z	INFO	[misconfig] Misconfiguration scanning is enabled
+2026-09-18T02:42:57Z	INFO	[misconfig] Need to update the checks bundle
+2026-09-18T02:42:57Z	INFO	[misconfig] Downloading the checks bundle...
+165.46 KiB / 165.46 KiB [------------------------------------------------------] 100.00% ? p/s 100ms2026-09-18T02:43:00Z	INFO	[terraform scanner] Scanning root module	file_path="infra"
+2026-09-18T02:43:00Z	WARN	[terraform parser] Variable values were not found in the environment or variable files. Evaluating may not work correctly.	module="root" variables="db_password"
+2026-09-18T02:43:01Z	INFO	Detected config files	num=4
+
+Report Summary
+
+┌───────────────────────┬────────────┬───────────────────┐
+│        Target         │    Type    │ Misconfigurations │
+├───────────────────────┼────────────┼───────────────────┤
+│ Dockerfile            │ dockerfile │         0         │
+├───────────────────────┼────────────┼───────────────────┤
+│ Dockerfile.moderacion │ dockerfile │         0         │
+├───────────────────────┼────────────┼───────────────────┤
+│ infra                 │ terraform  │         0         │
+├───────────────────────┼────────────┼───────────────────┤
+│ infra/main.tf         │ terraform  │         0         │
+└───────────────────────┴────────────┴───────────────────┘
+Legend:
+- '-': Not scanned
+- '0': Clean (no security findings detected)
+
+
+📣 [34mNotices:[0m
+  - Version 0.74.0 of Trivy is now available, current version is 0.67.2
+
+To suppress version checks, run Trivy scans with the --skip-version-check flag
+
+[OK] No hay configuraciones HIGH o CRITICAL.
+
+--------------------------------------------------
+ETAPA 3 - Endpoint de salud
+Umbral: bloquea si /salud no responde
+--------------------------------------------------
+{"aplicacion":"foro-resenas","estado":"ok"}
+
+[OK] La aplicacion responde correctamente.
+
+--------------------------------------------------
+ETAPA 4 - Generacion de SBOM CycloneDX
+Umbral: bloquea si no se puede generar el SBOM
+--------------------------------------------------
+2026-09-18T02:43:03Z	INFO	"--format cyclonedx" disables security scanning. Specify "--scanners vuln" explicitly if you want to include vulnerabilities in the "cyclonedx" report.
+2026-09-18T02:43:03Z	WARN	[pip] Unable to find python `site-packages` directory. License detection is skipped.	err="unable to find path to Python executable"
+2026-09-18T02:43:03Z	INFO	Number of language-specific files	num=1
+[OK] SBOM generado en reportes/sbom_cyclonedx.json
+
+==================================================
+DECISION FINAL: DESPLIEGUE PERMITIDO
+Todas las etapas obligatorias pasaron.
+==================================================

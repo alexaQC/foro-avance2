@@ -1,0 +1,3 @@
+# Riesgo aceptado: el bucket utiliza SSE-S3 (AES256).
+# El proyecto exige cifrado, pero no una clave KMS administrada por el cliente.
+AVD-AWS-0132

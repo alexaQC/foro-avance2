@@ -1,0 +1,28 @@
+services:
+  foro:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: foro_app
+    ports:
+      - "5000:5000"
+    environment:
+      SECRET_KEY: ${SECRET_KEY:-clave-local-temporal}
+      DATABASE_URL: ${DATABASE_URL:-sqlite:////app/foro.db}
+      MODERACION_URL: http://moderacion:5001/moderar
+      AWS_REGION: ${AWS_REGION:-us-east-1}
+      S3_BUCKET: ${S3_BUCKET:-}
+      AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
+      AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
+      AWS_SESSION_TOKEN: ${AWS_SESSION_TOKEN}
+    depends_on:
+      moderacion:
+        condition: service_healthy
+
+  moderacion:
+    build:
+      context: .
+      dockerfile: Dockerfile.moderacion
+    container_name: foro_moderacion
+    ports:
+      - "5001:5001"

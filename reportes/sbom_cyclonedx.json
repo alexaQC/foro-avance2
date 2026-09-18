@@ -1,0 +1,173 @@
+{
+  "$schema": "http://cyclonedx.org/schema/bom-1.6.schema.json",
+  "bomFormat": "CycloneDX",
+  "specVersion": "1.6",
+  "serialNumber": "urn:uuid:cf68a2db-cd71-45eb-9c8d-78f02ce12869",
+  "version": 1,
+  "metadata": {
+    "timestamp": "2026-09-18T02:43:03+00:00",
+    "tools": {
+      "components": [
+        {
+          "type": "application",
+          "manufacturer": {
+            "name": "Aqua Security Software Ltd."
+          },
+          "group": "aquasecurity",
+          "name": "trivy",
+          "version": "0.67.2"
+        }
+      ]
+    },
+    "component": {
+      "bom-ref": "68441db5-4584-4fc9-be91-339c62537a91",
+      "type": "application",
+      "name": "/src",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:SchemaVersion",
+          "value": "2"
+        }
+      ]
+    }
+  },
+  "components": [
+    {
+      "bom-ref": "0850b2ce-14e3-4a6d-9858-8d612c74ca04",
+      "type": "application",
+      "name": "app/requirements.txt",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:Class",
+          "value": "lang-pkgs"
+        },
+        {
+          "name": "aquasecurity:trivy:Type",
+          "value": "pip"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:pypi/boto3@1.40.30",
+      "type": "library",
+      "name": "boto3",
+      "version": "1.40.30",
+      "purl": "pkg:pypi/boto3@1.40.30",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "pip"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:pypi/flask-sqlalchemy@3.1.1",
+      "type": "library",
+      "name": "Flask-SQLAlchemy",
+      "version": "3.1.1",
+      "purl": "pkg:pypi/flask-sqlalchemy@3.1.1",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "pip"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:pypi/flask@3.1.2",
+      "type": "library",
+      "name": "Flask",
+      "version": "3.1.2",
+      "purl": "pkg:pypi/flask@3.1.2",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "pip"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:pypi/gunicorn@23.0.0",
+      "type": "library",
+      "name": "gunicorn",
+      "version": "23.0.0",
+      "purl": "pkg:pypi/gunicorn@23.0.0",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "pip"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:pypi/psycopg2-binary@2.9.10",
+      "type": "library",
+      "name": "psycopg2-binary",
+      "version": "2.9.10",
+      "purl": "pkg:pypi/psycopg2-binary@2.9.10",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "pip"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:pypi/requests@2.32.5",
+      "type": "library",
+      "name": "requests",
+      "version": "2.32.5",
+      "purl": "pkg:pypi/requests@2.32.5",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "pip"
+        }
+      ]
+    }
+  ],
+  "dependencies": [
+    {
+      "ref": "0850b2ce-14e3-4a6d-9858-8d612c74ca04",
+      "dependsOn": [
+        "pkg:pypi/boto3@1.40.30",
+        "pkg:pypi/flask-sqlalchemy@3.1.1",
+        "pkg:pypi/flask@3.1.2",
+        "pkg:pypi/gunicorn@23.0.0",
+        "pkg:pypi/psycopg2-binary@2.9.10",
+        "pkg:pypi/requests@2.32.5"
+      ]
+    },
+    {
+      "ref": "68441db5-4584-4fc9-be91-339c62537a91",
+      "dependsOn": [
+        "0850b2ce-14e3-4a6d-9858-8d612c74ca04"
+      ]
+    },
+    {
+      "ref": "pkg:pypi/boto3@1.40.30",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:pypi/flask-sqlalchemy@3.1.1",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:pypi/flask@3.1.2",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:pypi/gunicorn@23.0.0",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:pypi/psycopg2-binary@2.9.10",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:pypi/requests@2.32.5",
+      "dependsOn": []
+    }
+  ],
+  "vulnerabilities": []
+}
