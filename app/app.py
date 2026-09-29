@@ -2,6 +2,7 @@ import os
 import requests
 
 from s3_storage import guardar_publicacion_s3, eliminar_publicacion_s3
+from vista_previa_resena import vista_previa_bp
 from flask import (
     Flask,
     request,
@@ -18,6 +19,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 
 app = Flask(__name__)
+app.register_blueprint(vista_previa_bp)
 
 app.config["SECRET_KEY"] = os.getenv(
     "SECRET_KEY",
