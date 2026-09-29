@@ -1,0 +1,10 @@
+rules:
+  - id: jinja-safe-en-vista-previa
+    message: "Uso de | safe en plantilla Jinja con contenido dinámico: posible XSS almacenado/reflejado"
+    severity: ERROR
+    languages:
+      - generic
+    paths:
+      include:
+        - "*.py"
+    pattern: "{{ $...VAR | safe }}"

@@ -17,6 +17,25 @@ echo ""
 
 
 # --------------------------------------------------
+# CONTROLES DE ENTREGA FINAL - SAST Y SCA
+# --------------------------------------------------
+
+echo "--------------------------------------------------"
+echo "CONTROLES DE ENTREGA FINAL - SAST Y SCA"
+echo "--------------------------------------------------"
+
+if "$ROOT/pipeline/controles_final.sh"
+then
+    echo "[OK] Controles SAST/SCA completados."
+else
+    echo "[BLOQUEO] Uno o mas controles SAST/SCA fallaron."
+    FALLO=1
+fi
+
+echo ""
+
+
+# --------------------------------------------------
 # ETAPA 1 - SECRETOS
 # --------------------------------------------------
 
