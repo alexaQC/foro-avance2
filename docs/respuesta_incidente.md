@@ -1,43 +1,28 @@
 # Respuesta al incidente
 
 ## Contención inmediata
+La contención inmediata consistió en mantener el parche vulnerable únicamente en el ambiente de QA y no pasarlo a producción.
 
-La medida inmediata sería deshabilitar temporalmente la funcionalidad de vista previa enriquecida en el ambiente de QA mientras se prepara la corrección definitiva.
+Al ejecutar el pipeline, Semgrep detectó el uso inseguro de `| safe` y el despliegue fue bloqueado con:
+`DECISION FINAL: DESPLIEGUE BLOQUEADO`
 
-La funcionalidad vulnerable no debe promoverse a Producción mientras el pipeline continúe detectando el uso inseguro del filtro `safe`.
+De esta forma, el código vulnerable permaneció en QA mientras se preparaba la corrección.
 
-Como medida operativa temporal también se puede bloquear el acceso al endpoint:
-
-`POST /moderacion/resenas/<resena_id>/vista-previa`
-
-hasta que el código sea remediado y vuelva a pasar correctamente los controles de seguridad.
-
-La contención busca impedir que el contenido no confiable llegue a renderizarse de manera insegura mientras se prepara la corrección definitiva.
 
 ## Prevención
+La prevención consistió en corregir la causa raíz del problema sin eliminar la funcionalidad de vista previa enriquecida.
 
-La prevención consiste en corregir la causa raíz en el código, manteniendo la funcionalidad de vista previa enriquecida pero evitando renderizar directamente contenido controlado por el usuario mediante `| safe`.
+Se eliminó el uso inseguro de `| safe` sobre contenido controlado por el usuario y se modificó el procesamiento para que el texto recibido se tratara de forma segura antes de agregar el formato permitido.
 
-La corrección debe:
+La corrección mantuvo funciones como negritas y saltos de línea, pero evitó que contenido HTML o JavaScript enviado por el usuario pudiera interpretarse directamente en la página.
 
-1. Mantener el formato permitido de la vista previa.
-2. Sanitizar el contenido generado antes de renderizarlo.
-3. Permitir únicamente etiquetas HTML explícitamente autorizadas.
-4. Eliminar atributos o etiquetas capaces de ejecutar JavaScript.
-5. Mantener activo el control de Semgrep dentro del pipeline para evitar que vuelva a introducirse un uso inseguro equivalente.
+También se mantuvo la regla de Semgrep dentro del pipeline para detectar nuevamente este patrón si llegara a introducirse en el código.
 
-La remediación se validará nuevamente en QA mediante el pipeline completo.
-
-Solo cuando el pipeline termine con:
-
+Después de la corrección, el pipeline se ejecutó nuevamente en QA y terminó con:
 `DECISION FINAL: DESPLIEGUE PERMITIDO`
 
-la versión corregida será promovida a la instancia nueva de Producción.
 
 ## Diferencia entre contención y prevención
+La contención fue la medida temporal para evitar que la versión vulnerable avanzara a producción (el bloqueo del pipeline en QA)
 
-La contención es una medida temporal para detener el riesgo mientras se prepara el arreglo.
-
-La prevención es el cambio permanente en el código que elimina la causa raíz de la vulnerabilidad.
-
-En este proyecto, la contención consiste en impedir temporalmente el uso de la vista previa vulnerable, mientras que la prevención consistirá en sanitizar correctamente el HTML antes de renderizarlo y mantener el control automático dentro del pipeline.
+La prevención fue el cambio permanente en el código que corrigió la causa del XSS y permitió mantener funcionando la vista previa de forma segura (la corrección del manejo del contenido enviado por el usuario)
